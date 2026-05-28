@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Assistant</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <span class="header-title">Study Assistant</span>
+        <button id="refresh-btn" title="Re-scan current page">&#8635;</button>
+      </header>
+
+      <div id="page-context">
+        <span id="page-status">Capturing page&hellip;</span>
+      </div>
+
+      <div id="answer"></div>
+
+      <div id="action-bar">
+        <button id="solve-btn" hidden>Solve Quiz</button>
+      </div>
+    </div>
+
+    <script src="sidepanel.js"></script>
+  </body>
+</html>

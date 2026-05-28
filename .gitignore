@@ -1,0 +1,26 @@
+# Python / Poetry
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+dist/
+*.egg-info/
+.python-version
+
+# Environment
+.env
+*.env
+
+# Database
+*.db
+*.sqlite3
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
