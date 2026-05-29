@@ -1,6 +1,7 @@
 import { setAnswer } from "./js/ui.js";
 import { captureCurrentTab } from "./js/capture.js";
 import { fetchSolution } from "./js/api.js";
+import { resetPageTimer } from "./js/timer.js";
 
 const solveBtn = document.getElementById("solve-btn");
 const refreshBtn = document.getElementById("refresh-btn");
@@ -17,6 +18,7 @@ async function scanPage() {
   pageData = await captureCurrentTab();
   if (!pageData) return;
 
+  resetPageTimer();
   solveBtn.hidden = false;
 }
 
