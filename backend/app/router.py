@@ -45,4 +45,4 @@ async def solve(req: SolveRequest) -> SolveResponse:
 
     answer = result.content
     set_cached(q_hash, answer)
-    return SolveResponse(response=answer, cached=False)
+    return SolveResponse(response=answer, cached=False, used_vision=bool(req.page_screenshot))

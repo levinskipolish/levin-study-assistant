@@ -10,3 +10,4 @@ class SolveRequest(BaseModel):
 class SolveResponse(BaseModel):
     response: str
     cached: bool = False
+    used_vision: bool = False

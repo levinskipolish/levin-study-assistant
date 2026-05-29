@@ -130,6 +130,26 @@ header {
   color: var(--error);
 }
 
+/* ── Vision badge ── */
+#answer-meta {
+  padding: 4px 14px 8px;
+  flex-shrink: 0;
+}
+
+#vision-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--surface);
+  background: var(--accent);
+  padding: 2px 8px;
+  border-radius: 99px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
 /* ── Action bar ── */
 #action-bar {
   padding: 10px 14px;

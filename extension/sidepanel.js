@@ -1,4 +1,4 @@
-import { setAnswer } from "./js/ui.js";
+import { setAnswer, setVisionBadge } from "./js/ui.js";
 import { captureCurrentTab } from "./js/capture.js";
 import { fetchSolution } from "./js/api.js";
 import { resetPageTimer } from "./js/timer.js";
@@ -14,6 +14,7 @@ let updateDebounceTimer = null;
 async function scanPage() {
   solveBtn.hidden = true;
   setAnswer("", "ready");
+  setVisionBadge(false);
 
   pageData = await captureCurrentTab();
   if (!pageData) return;
@@ -32,6 +33,7 @@ async function solveQuiz() {
   try {
     const data = await fetchSolution(pageData.text, pageData.title, pageData.screenshot);
     setAnswer(data.response, "ready");
+    setVisionBadge(data.used_vision);
   } catch (err) {
     setAnswer(`Error: ${err.message}`, "error");
   } finally {

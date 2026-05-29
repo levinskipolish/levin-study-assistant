@@ -1,5 +1,6 @@
 const answerEl = document.getElementById("answer");
 const pageStatus = document.getElementById("page-status");
+const answerMeta = document.getElementById("answer-meta");
 
 /**
  * @param {string} text
@@ -13,4 +14,9 @@ export function setAnswer(text, state = "ready") {
 /** @param {string} text */
 export function setPageStatus(text) {
   pageStatus.textContent = text;
+}
+
+/** @param {boolean} visible */
+export function setVisionBadge(visible) {
+  answerMeta.hidden = !visible;
 }
