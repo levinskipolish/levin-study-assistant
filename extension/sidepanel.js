@@ -1,5 +1,4 @@
-import { hasQuestions } from "./js/detector.js";
-import { setAnswer, setPageStatus } from "./js/ui.js";
+import { setAnswer } from "./js/ui.js";
 import { captureCurrentTab } from "./js/capture.js";
 import { fetchSolution } from "./js/api.js";
 
@@ -18,12 +17,7 @@ async function scanPage() {
   pageData = await captureCurrentTab();
   if (!pageData) return;
 
-  if (hasQuestions(pageData.text)) {
-    solveBtn.hidden = false;
-    setAnswer("Quiz detected — press Solve Quiz for answers.", "ready");
-  } else {
-    setAnswer("No quiz detected on this page.", "ready");
-  }
+  solveBtn.hidden = false;
 }
 
 // ── Solve ─────────────────────────────────────────────────────────────────────
