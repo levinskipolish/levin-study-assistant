@@ -1,6 +1,8 @@
 const answerEl = document.getElementById("answer");
 const pageStatus = document.getElementById("page-status");
 const answerMeta = document.getElementById("answer-meta");
+const monitorWarning = document.getElementById("monitor-warning");
+const monitorText = document.getElementById("monitor-text");
 const visionBadge = document.getElementById("vision-badge");
 const visionPreview = document.getElementById("vision-preview");
 const visionImg = document.getElementById("vision-img");
@@ -28,10 +30,7 @@ export function setPageStatus(text) {
   pageStatus.textContent = text;
 }
 
-/**
- * @param {boolean} visible
- * @param {string|null} screenshotDataUrl  base64 data URL of the captured image
- */
+/** @param {boolean} visible */
 export function setVisionBadge(visible, screenshotDataUrl = null) {
   if (!visible) {
     answerMeta.hidden = true;
@@ -45,4 +44,17 @@ export function setVisionBadge(visible, screenshotDataUrl = null) {
   if (screenshotDataUrl) {
     visionImg.src = screenshotDataUrl;
   }
+}
+
+/**
+ * @param {string[]} signals  list of detection strings; empty array clears the warning
+ */
+export function setMonitorWarning(signals) {
+  if (!signals.length) {
+    monitorWarning.hidden = true;
+    monitorText.textContent = "";
+    return;
+  }
+  monitorText.textContent = signals.join(" \u00b7 ");
+  monitorWarning.hidden = false;
 }

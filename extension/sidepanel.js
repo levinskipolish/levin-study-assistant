@@ -1,4 +1,4 @@
-import { setAnswer, setVisionBadge } from "./js/ui.js";
+import { setAnswer, setVisionBadge, setMonitorWarning } from "./js/ui.js";
 import { captureCurrentTab } from "./js/capture.js";
 import { fetchSolution } from "./js/api.js";
 import { resetPageTimer } from "./js/timer.js";
@@ -15,9 +15,12 @@ async function scanPage() {
   solveBtn.hidden = true;
   setAnswer("", "ready");
   setVisionBadge(false);
+  setMonitorWarning([]);
 
   pageData = await captureCurrentTab();
   if (!pageData) return;
+
+  setMonitorWarning(pageData.monitorSignals ?? []);
 
   resetPageTimer();
   solveBtn.hidden = false;

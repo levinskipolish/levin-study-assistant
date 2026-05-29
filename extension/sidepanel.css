@@ -130,6 +130,26 @@ header {
   color: var(--error);
 }
 
+/* ── Monitor warning ── */
+#monitor-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 6px 12px 0;
+  padding: 7px 10px;
+  background: #fff3cd;
+  border: 1px solid #f0ad4e;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #7a5200;
+  line-height: 1.4;
+}
+
+#monitor-icon {
+  flex-shrink: 0;
+  font-size: 13px;
+}
+
 /* ── Vision badge ── */
 #answer-meta {
   padding: 4px 14px 8px;

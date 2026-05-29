@@ -1,4 +1,5 @@
 import { setPageStatus } from "./ui.js";
+import { detectPageMonitoring } from "./monitor-detect.js";
 
 /**
  * Asks the background service worker to capture the current tab screenshot.
@@ -52,13 +53,20 @@ export async function captureCurrentTab() {
       return null;
     }
 
-    // Only pay for a screenshot when the page actually has visual content
-    const screenshot = result.hasVisuals ? await captureScreenshot() : null;
+    // Run monitoring detection in parallel with screenshot
+    const [monitorResult, screenshot] = await Promise.all([
+      chrome.scripting
+        .executeScript({ target: { tabId: tab.id }, func: detectPageMonitoring })
+        .then(([r]) => r?.result ?? { signals: [] })
+        .catch(() => ({ signals: [] })),
+      result.hasVisuals ? captureScreenshot() : Promise.resolve(null),
+    ]);
 
     const truncatedTitle =
       result.title.length > 60 ? result.title.slice(0, 57) + "…" : result.title;
     setPageStatus(`📄 ${truncatedTitle || result.url}`);
-    return { ...result, screenshot };
+
+    return { ...result, screenshot, monitorSignals: monitorResult.signals };
   } catch {
     setPageStatus("⚠️ Cannot read this page (try a regular website).");
     return null;
