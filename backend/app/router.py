@@ -25,10 +25,20 @@ async def solve(req: SolveRequest) -> SolveResponse:
     if cached is not None:
         return SolveResponse(response=cached, cached=True)
 
+    # Build human message — include screenshot when available (vision)
+    human_parts: list = [{"type": "text", "text": f"Page: {req.page_title}\n\n{content}"}]
+    if req.page_screenshot:
+        url = (
+            req.page_screenshot
+            if req.page_screenshot.startswith("data:")
+            else f"data:image/jpeg;base64,{req.page_screenshot}"
+        )
+        human_parts.append({"type": "image_url", "image_url": {"url": url}})
+
     try:
         result = await llm.ainvoke([
             SystemMessage(content=SOLVE_SYSTEM_PROMPT),
-            HumanMessage(content=f"Page: {req.page_title}\n\n{content}"),
+            HumanMessage(content=human_parts),
         ])
     except Exception as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc

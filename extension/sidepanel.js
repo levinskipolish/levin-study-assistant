@@ -30,7 +30,7 @@ async function solveQuiz() {
   setAnswer("Solving…", "loading");
 
   try {
-    const data = await fetchSolution(pageData.text, pageData.title);
+    const data = await fetchSolution(pageData.text, pageData.title, pageData.screenshot);
     setAnswer(data.response, "ready");
   } catch (err) {
     setAnswer(`Error: ${err.message}`, "error");
