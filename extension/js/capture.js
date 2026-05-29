@@ -35,25 +35,25 @@ export async function captureCurrentTab() {
   }
 
   try {
-    const [[{ result }], screenshot] = await Promise.allSettled([
-      chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        func: () => ({
-          text: document.body.innerText,
-          title: document.title,
-          url: window.location.href,
-        }),
+    // First pass: get text content + detect whether the page has visual elements
+    const [textResult] = await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: () => ({
+        text: document.body.innerText,
+        title: document.title,
+        url: window.location.href,
+        hasVisuals: document.querySelectorAll("img, canvas, svg, figure, video").length > 0,
       }),
-      captureScreenshot(),
-    ]).then(([textResult, shotResult]) => [
-      textResult.status === "fulfilled" ? textResult.value : null,
-      shotResult.status === "fulfilled" ? shotResult.value : null,
-    ]);
+    });
 
+    const result = textResult?.result;
     if (!result) {
-      setPageStatus("⚠️ Cannot read this page (try a regular website).");
+      setPageStatus("\u26a0\ufe0f Cannot read this page (try a regular website).");
       return null;
     }
+
+    // Only pay for a screenshot when the page actually has visual content
+    const screenshot = result.hasVisuals ? await captureScreenshot() : null;
 
     const truncatedTitle =
       result.title.length > 60 ? result.title.slice(0, 57) + "…" : result.title;
