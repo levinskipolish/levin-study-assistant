@@ -1,6 +1,24 @@
 import { setPageStatus } from "./ui.js";
 
 /**
+ * Asks the background service worker to capture the current tab screenshot.
+ * Returns the data URL string, or null on any failure.
+ *
+ * @returns {Promise<string|null>}
+ */
+async function captureScreenshot() {
+  return new Promise((resolve) => {
+    chrome.runtime.sendMessage({ action: "captureTab" }, (resp) => {
+      if (chrome.runtime.lastError || !resp || resp.error || !resp.dataUrl) {
+        resolve(null);
+      } else {
+        resolve(resp.dataUrl);
+      }
+    });
+  });
+}
+
+/**
  * Reads the active tab's text, title, URL, and a JPEG screenshot.
  * Updates the page status bar and returns the data, or null on failure.
  * Screenshot capture is best-effort — if it fails the field is null.
@@ -26,7 +44,7 @@ export async function captureCurrentTab() {
           url: window.location.href,
         }),
       }),
-      chrome.tabs.captureVisibleTab(tab.windowId, { format: "jpeg", quality: 65 }),
+      captureScreenshot(),
     ]).then(([textResult, shotResult]) => [
       textResult.status === "fulfilled" ? textResult.value : null,
       shotResult.status === "fulfilled" ? shotResult.value : null,
