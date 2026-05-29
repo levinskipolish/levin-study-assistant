@@ -148,6 +148,28 @@ header {
   border-radius: 99px;
   letter-spacing: 0.3px;
   text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+}
+
+#vision-badge:hover {
+  filter: brightness(1.1);
+}
+
+#vision-preview {
+  margin-top: 8px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border, #ddd);
+}
+
+#vision-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+  object-fit: contain;
+  background: #000;
 }
 
 /* ── Action bar ── */

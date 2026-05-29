@@ -33,7 +33,7 @@ async function solveQuiz() {
   try {
     const data = await fetchSolution(pageData.text, pageData.title, pageData.screenshot);
     setAnswer(data.response, "ready");
-    setVisionBadge(data.used_vision);
+    setVisionBadge(data.used_vision, pageData.screenshot);
   } catch (err) {
     setAnswer(`Error: ${err.message}`, "error");
   } finally {
