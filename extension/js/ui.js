@@ -50,7 +50,8 @@ export function setVisionBadge(visible, screenshotDataUrl = null) {
  * @param {string[]} signals  list of detection strings; empty array clears the warning
  */
 export function setMonitorWarning(signals) {
-  if (!signals.length) {
+  if (!monitorWarning || !monitorText) return;
+  if (!signals || !signals.length) {
     monitorWarning.hidden = true;
     monitorText.textContent = "";
     return;

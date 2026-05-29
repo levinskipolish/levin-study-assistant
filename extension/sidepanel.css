@@ -131,7 +131,7 @@ header {
 }
 
 /* ── Monitor warning ── */
-#monitor-warning {
+#monitor-warning:not([hidden]) {
   display: flex;
   align-items: flex-start;
   gap: 6px;

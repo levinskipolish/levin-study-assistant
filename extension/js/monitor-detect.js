@@ -78,3 +78,5 @@ function detectPageMonitoring() {
 
   return { signals };
 }
+
+export { detectPageMonitoring };
